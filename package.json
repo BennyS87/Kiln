@@ -1,0 +1,94 @@
+{
+  "name": "kiln-sound-transformer",
+  "productName": "Kiln",
+  "version": "1.0.0",
+  "description": "Kiln - a sound transformation workshop in the spirit of the Composers Desktop Project: spectral, waveset, granular and time/pitch processes",
+  "main": "main.js",
+  "author": "Ben Skirth",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:mac": "electron-builder --mac --publish never",
+    "dist:win": "electron-builder --win --publish never",
+    "test": "node test/dsp.test.js && node test/pitch.test.js"
+  },
+  "build": {
+    "appId": "com.benskirth.kiln",
+    "productName": "Kiln",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "package.json"
+    ],
+    "fileAssociations": [
+      {
+        "ext": "kiln",
+        "name": "Kiln Project",
+        "role": "Editor"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.music",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "identity": "-",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Kiln does not record from the microphone."
+      }
+    },
+    "dmg": {
+      "artifactName": "Kiln-${version}-mac-${arch}.${ext}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "Kiln-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Kiln-Portable-${version}.${ext}"
+    }
+  },
+  "devDependencies": {
+    "electron": "^45.3.2",
+    "electron-builder": "^26.0.0"
+  }
+}
